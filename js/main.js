@@ -1,3 +1,5 @@
+'use strict';
+
 // Источник: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 const getRandomIntInclusive = function (min, max) {
   min = Math.ceil(min);
