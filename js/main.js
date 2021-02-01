@@ -17,7 +17,3 @@ const getRandomFloat = function (min, max, numbers) {
 
 getRandomIntInclusive(0, 10);
 getRandomFloat(1.1, 1.5, 5);
-
-
-
-
