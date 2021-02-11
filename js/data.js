@@ -1,4 +1,4 @@
-import {getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArray} from './util.js';
+import {getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArray} from './utils.js';
 
 const TITLES = [
   'Уютное место в центре города',
