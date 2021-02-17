@@ -22,7 +22,7 @@ const QUEST_WORDS = [
 const adList = document.querySelector('.map__canvas');
 const adTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const getFeaturesList = (container, features) => {
+const renderFeaturesIntoContainer = (container, features) => {
   container.innerHTML = '';
 
   features.forEach((element) => {
@@ -32,7 +32,7 @@ const getFeaturesList = (container, features) => {
   });
 };
 
-const getPhotosList = (container, photos) => {
+const renderPhotosIntoContainer = (container, photos) => {
   const adPhoto = container.querySelector('.popup__photo');
   container.innerHTML = '';
 
@@ -53,8 +53,8 @@ const renderAdCard = (adData) => {
   adCard.querySelector('.popup__text--time').textContent = `Заезд после ${adData.offer.checkin}, выезд до ${adData.offer.checkout}`;
   adCard.querySelector('.popup__description').textContent = adData.offer.description;
   adCard.querySelector('.popup__avatar').src = adData.author.avatar;
-  getFeaturesList(adCard.querySelector('.popup__features'), adData.offer.features);
-  getPhotosList(adCard.querySelector('.popup__photos'), adData.offer.photos);
+  renderFeaturesIntoContainer(adCard.querySelector('.popup__features'), adData.offer.features);
+  renderPhotosIntoContainer(adCard.querySelector('.popup__photos'), adData.offer.photos);
   adList.appendChild(adCard);
 };
 
