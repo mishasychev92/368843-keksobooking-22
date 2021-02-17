@@ -53,11 +53,11 @@ const createAd = () => {
   const Y = getRandomFloat(139.70000, 139.80000, 5);
   return {
     author: {
-      avatar: 'img/avatars/user0' + getRandomIntInclusive(1, 8) + '.png',
+      avatar: `img/avatars/user0${getRandomIntInclusive(1, 8)}.png`,
     },
     offer: {
       title: getRandomArrayElement(TITLES),
-      address: X + ', ' + Y,
+      address: `${X}, ${Y}`,
       price: getRandomIntInclusive(10000, 50000),
       type: getRandomArrayElement(TYPES),
       rooms: getRandomIntInclusive(1, 4),

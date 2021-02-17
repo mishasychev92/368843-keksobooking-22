@@ -1,3 +1,4 @@
 import {similarAds} from './data.js';
+import {renderAdCard} from './ad-card.js';
 
-similarAds;
+renderAdCard(similarAds[0]);

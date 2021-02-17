@@ -34,9 +34,14 @@ const getRandomArray = (elements) => {
   return shuffleArray(elements).slice(getRandomIntInclusive(0, elements.length - 1));
 };
 
+const declOfNum = (number, words) => {
+  return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? number % 10 : 5]];
+};
+
 export { 
   getRandomIntInclusive, 
   getRandomFloat, 
   getRandomArrayElement, 
-  getRandomArray
+  getRandomArray,
+  declOfNum
 };
