@@ -1,6 +1,5 @@
 /* global L:readonly */
 import { disableForms, enableForms, addressField } from './form.js';
-import { similarAds } from './data.js';
 import { renderAdCard } from './ad-card.js';
 
 const START_ZOOM = 13;
@@ -62,7 +61,7 @@ mainPinMarker
   .on('move', onMovingPin)
   .addTo(map);
 
-const addAdPins = (adData) => {
+const addAdPinsIntoMap = (adData) => {
   adData.forEach((ad) => {
     const pinIcon = L.icon({
       iconUrl: pinImage.url,
@@ -86,4 +85,4 @@ const addAdPins = (adData) => {
   });
 };
 
-addAdPins(similarAds);
+export { addAdPinsIntoMap };
