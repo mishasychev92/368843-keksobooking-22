@@ -1,4 +1,4 @@
-import {declOfNum} from './utils.js';
+import { declOfNum } from './utils.js';
 
 const TYPES = {
   flat: 'Квартира',
@@ -19,7 +19,6 @@ const QUEST_WORDS = [
   'гостей',
 ];
 
-const adList = document.querySelector('.map__canvas');
 const adTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const renderFeaturesIntoContainer = (container, features) => {
@@ -55,7 +54,7 @@ const renderAdCard = (adData) => {
   adCard.querySelector('.popup__avatar').src = adData.author.avatar;
   renderFeaturesIntoContainer(adCard.querySelector('.popup__features'), adData.offer.features);
   renderPhotosIntoContainer(adCard.querySelector('.popup__photos'), adData.offer.photos);
-  adList.appendChild(adCard);
+  return adCard;
 };
 
 export { renderAdCard };

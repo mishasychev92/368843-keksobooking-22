@@ -1,4 +1,4 @@
-import {getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArray} from './utils.js';
+import { getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArray } from './utils.js';
 
 const TITLES = [
   'Уютное место в центре города',
@@ -45,8 +45,6 @@ const PHOTOS = [
 ];
 
 const SIMILAR_AD_COUNT = 10;
-
-
 
 const createAd = () => {
   const X = getRandomFloat(35.65000, 35.70000, 5);
