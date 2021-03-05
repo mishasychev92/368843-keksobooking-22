@@ -1,8 +1,17 @@
 const MIN_PRICE = {
-  bungalow: '0',
-  flat: '1000',
-  house: '5000',
-  palace: '10000',
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+};
+const MAX_PRICE = 1000000;
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+const NUMBER_OF_QUESTS = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
 };
 
 const typeField = document.querySelector('#type');
@@ -15,6 +24,10 @@ const mapFilter = document.querySelector('.map__filters');
 const formFields = document.querySelectorAll('fieldset');
 const mapFields = document.querySelectorAll('.map__filter');
 const addressField = document.querySelector('#address');
+const titleField = document.querySelector('#title');
+const roomsField = document.querySelector('#room_number');
+const capacityField = document.querySelector('#capacity');
+const guestOptions = capacityField.querySelectorAll('option');
 
 typeField.addEventListener ('change', () => {
   const currentMinPrice = MIN_PRICE[typeField.value];
@@ -26,6 +39,51 @@ timeField.addEventListener ('change', (evt) => {
   timeInField.value = evt.target.value;
   timeOutField.value = evt.target.value;
 });
+
+titleField.addEventListener('input', () => {
+  const valueLength = titleField.value.length;
+
+  if (valueLength < MIN_TITLE_LENGTH) {
+    titleField.setCustomValidity('Ещё ' + (MIN_TITLE_LENGTH - valueLength) +' симв.');
+  } else if (valueLength > MAX_TITLE_LENGTH) {
+    titleField.setCustomValidity('Удалите лишние ' + (valueLength - MAX_TITLE_LENGTH) +' симв.');
+  } else {
+    titleField.setCustomValidity('');
+  }
+
+  titleField.reportValidity();
+});
+
+priceField.addEventListener('input', () => {
+  const priceValue = priceField.value;
+
+  if (priceValue < MIN_PRICE[typeField.value]) {
+    priceField.setCustomValidity(`Минимальная цена - ${MIN_PRICE[typeField.value]}`);
+  } else if (priceValue > MAX_PRICE) {
+    priceField.setCustomValidity(`Максимальная цена - ${MAX_PRICE}`);
+  } else {
+    priceField.setCustomValidity('');
+  }
+
+  priceField.reportValidity();
+});
+
+const changeNumberOfGuests = () => {
+  guestOptions.forEach((option) => {
+    option.disabled = true;
+  });
+
+  NUMBER_OF_QUESTS[roomsField.value].forEach((element) => {
+    guestOptions.forEach((option) => {
+      if (element == option.value) {
+        option.disabled = false;
+        option.selected = true;
+      }
+    });
+  });
+};
+
+roomsField.addEventListener('change', changeNumberOfGuests);
 
 const disableForms = () => {
   formFields.forEach((field) => {
@@ -51,6 +109,7 @@ const enableForms = () => {
 
   adForm.classList.remove('ad-form--disabled');
   mapFilter.classList.remove('map__filters--disabled');
+  changeNumberOfGuests();
 };
 
 export { 
