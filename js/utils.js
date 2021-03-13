@@ -38,10 +38,20 @@ const declOfNum = (number, words) => {
   return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? number % 10 : 5]];
 };
 
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+const isEnterEvent = (evt) => {
+  return evt.key === 'Enter';
+};
+
 export { 
   getRandomIntInclusive, 
   getRandomFloat, 
   getRandomArrayElement, 
   getRandomArray,
-  declOfNum
+  declOfNum,
+  isEscEvent,
+  isEnterEvent
 };

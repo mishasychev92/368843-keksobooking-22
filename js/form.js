@@ -1,3 +1,7 @@
+import { showErrorPopup, showSuccessPopup } from './popup.js';
+import { resetMap } from './map.js';
+import { sendData } from './api.js';
+
 const MIN_PRICE = {
   bungalow: 0,
   flat: 1000,
@@ -28,6 +32,7 @@ const titleField = document.querySelector('#title');
 const roomsField = document.querySelector('#room_number');
 const capacityField = document.querySelector('#capacity');
 const guestOptions = capacityField.querySelectorAll('option');
+const resetButton = adForm.querySelector('.ad-form__reset');
 
 typeField.addEventListener ('change', () => {
   const currentMinPrice = MIN_PRICE[typeField.value];
@@ -66,6 +71,12 @@ priceField.addEventListener('input', () => {
   }
 
   priceField.reportValidity();
+});
+
+resetButton.addEventListener ('click', (evt) => {
+  evt.preventDefault();
+  adForm.reset();
+  resetMap();
 });
 
 const changeNumberOfGuests = () => {
@@ -112,8 +123,30 @@ const enableForms = () => {
   changeNumberOfGuests();
 };
 
+const onSuccessSubmit = () => {
+  showSuccessPopup('Форма отправлена!');
+  adForm.reset();
+  resetMap();
+};
+
+const onFailSubmit = () => {
+  showErrorPopup('Не удалось отправить форму. Попробуйте ещё раз.');
+};
+
+const setFormSubmit = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      onSuccessSubmit,
+      onFailSubmit,
+      new FormData(evt.target),
+    );
+  });
+};
+
 export { 
   disableForms, 
   enableForms,
-  addressField
+  addressField,
+  setFormSubmit
 };

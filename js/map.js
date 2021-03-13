@@ -71,8 +71,8 @@ const addAdPinsIntoMap = (adData) => {
 
     const pinMarker = L.marker(
       {
-        lat: ad.location.x,
-        lng: ad.location.y,
+        lat: ad.location.lat,
+        lng: ad.location.lng,
       }, 
       {
         icon: pinIcon,
@@ -85,4 +85,12 @@ const addAdPinsIntoMap = (adData) => {
   });
 };
 
-export { addAdPinsIntoMap };
+const resetMap = () => {
+  mainPinMarker.setLatLng(startCoordinates);
+  fillAdressField(startCoordinates);
+};
+
+export { 
+  addAdPinsIntoMap,
+  resetMap
+};

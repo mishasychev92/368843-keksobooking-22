@@ -1,4 +1,10 @@
-import { similarAds } from './data.js';
 import { addAdPinsIntoMap } from './map.js';
+import { getData } from './api.js';
+import { showErrorPopup } from './popup.js';
+import { setFormSubmit } from './form.js';
 
-addAdPinsIntoMap(similarAds);
+getData(addAdPinsIntoMap, showErrorPopup);
+setFormSubmit();
+
+
+
