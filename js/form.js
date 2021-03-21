@@ -1,5 +1,5 @@
 import { showErrorPopup, showSuccessPopup } from './popup.js';
-import { resetMap } from './map.js';
+import { resetMainMarker } from './map.js';
 import { sendData } from './api.js';
 
 const MIN_PRICE = {
@@ -76,7 +76,7 @@ priceField.addEventListener('input', () => {
 resetButton.addEventListener ('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
-  resetMap();
+  resetMainMarker();
 });
 
 const changeNumberOfGuests = () => {
@@ -126,7 +126,7 @@ const enableForms = () => {
 const onSuccessSubmit = () => {
   showSuccessPopup('Форма отправлена!');
   adForm.reset();
-  resetMap();
+  resetMainMarker();
 };
 
 const onFailSubmit = () => {
@@ -144,9 +144,15 @@ const setFormSubmit = () => {
   });
 };
 
+const setMapFilterChange = (cb) => {
+  mapFilter.addEventListener('change', cb);
+};
+
 export { 
   disableForms, 
   enableForms,
   addressField,
-  setFormSubmit
+  setFormSubmit,
+  mapFilter,
+  setMapFilterChange
 };

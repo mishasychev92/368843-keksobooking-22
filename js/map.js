@@ -1,8 +1,10 @@
 /* global L:readonly */
 import { disableForms, enableForms, addressField } from './form.js';
 import { renderAdCard } from './ad-card.js';
+import { filterAdData } from './filter.js';
 
 const START_ZOOM = 13;
+const MAX_NUMBER_OF_ADS = 10;
 const startCoordinates = {
   lat: 35.6895000,
   lng: 139.6917100,
@@ -17,6 +19,7 @@ const pinImage = {
   size: [40, 40],
   anchor: [20, 40],
 };
+let pinMarkers = [];
 
 disableForms();
 
@@ -46,6 +49,17 @@ const onMovingPin = () => {
   fillAdressField(currentCoordinates);
 };
 
+const clearPinMarkes = (pins) => {
+  pins.forEach((pin) => {
+    pin.remove();
+  });
+};
+
+const resetMainMarker = () => {
+  mainPinMarker.setLatLng(startCoordinates);
+  fillAdressField(startCoordinates);
+};
+
 addressField.setAttribute('readonly', true);
 fillAdressField(startCoordinates);
 
@@ -62,35 +76,34 @@ mainPinMarker
   .addTo(map);
 
 const addAdPinsIntoMap = (adData) => {
-  adData.forEach((ad) => {
-    const pinIcon = L.icon({
-      iconUrl: pinImage.url,
-      iconSize: pinImage.size,
-      iconAnchor: pinImage.anchor,
+  clearPinMarkes(pinMarkers);
+  adData
+    .slice(0, MAX_NUMBER_OF_ADS)
+    .filter(filterAdData)
+    .forEach((ad) => {
+      const pinIcon = L.icon({
+        iconUrl: pinImage.url,
+        iconSize: pinImage.size,
+        iconAnchor: pinImage.anchor,
+      });
+
+      const pinMarker = L.marker(
+        {
+          lat: ad.location.lat,
+          lng: ad.location.lng,
+        }, 
+        {
+          icon: pinIcon,
+        },
+      );
+      pinMarker
+        .addTo(map)
+        .bindPopup(renderAdCard(ad), {keepInView: true});
+      pinMarkers.push(pinMarker);
     });
-
-    const pinMarker = L.marker(
-      {
-        lat: ad.location.lat,
-        lng: ad.location.lng,
-      }, 
-      {
-        icon: pinIcon,
-      },
-    );
-
-    pinMarker
-      .addTo(map)
-      .bindPopup(renderAdCard(ad), {keepInView: true});
-  });
-};
-
-const resetMap = () => {
-  mainPinMarker.setLatLng(startCoordinates);
-  fillAdressField(startCoordinates);
 };
 
 export { 
   addAdPinsIntoMap,
-  resetMap
+  resetMainMarker
 };

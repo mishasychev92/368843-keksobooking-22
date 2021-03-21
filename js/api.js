@@ -9,8 +9,8 @@ const getData = (onSuccess, onFail) => {
       }
       onFail(`${response.status}: ${response.statusText}`);
     })
-    .then((ads) => {
-      onSuccess(ads);
+    .then((adData) => {
+      onSuccess(adData);
     })
     .catch(() => onFail('Не удалось получить данные.'));
 };
