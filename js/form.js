@@ -1,6 +1,7 @@
 import { showErrorPopup, showSuccessPopup } from './popup.js';
 import { resetMainMarker } from './map.js';
 import { sendData } from './api.js';
+import { resetImagePreview } from './ad-photos.js';
 
 const MIN_PRICE = {
   bungalow: 0,
@@ -34,11 +35,13 @@ const capacityField = document.querySelector('#capacity');
 const guestOptions = capacityField.querySelectorAll('option');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
-typeField.addEventListener ('change', () => {
+const changeMinPrice = () => {
   const currentMinPrice = MIN_PRICE[typeField.value];
   priceField.setAttribute('placeholder', currentMinPrice);
   priceField.setAttribute('min', currentMinPrice);
-});
+};
+
+typeField.addEventListener('change', changeMinPrice);
 
 timeField.addEventListener ('change', (evt) => {
   timeInField.value = evt.target.value;
@@ -73,12 +76,6 @@ priceField.addEventListener('input', () => {
   priceField.reportValidity();
 });
 
-resetButton.addEventListener ('click', (evt) => {
-  evt.preventDefault();
-  adForm.reset();
-  resetMainMarker();
-});
-
 const changeNumberOfGuests = () => {
   guestOptions.forEach((option) => {
     option.disabled = true;
@@ -86,7 +83,7 @@ const changeNumberOfGuests = () => {
 
   NUMBER_OF_QUESTS[roomsField.value].forEach((element) => {
     guestOptions.forEach((option) => {
-      if (element == option.value) {
+      if (element === Number(option.value)) {
         option.disabled = false;
         option.selected = true;
       }
@@ -123,10 +120,22 @@ const enableForms = () => {
   changeNumberOfGuests();
 };
 
+resetButton.addEventListener ('click', (evt) => {
+  evt.preventDefault();
+  adForm.reset();
+  changeMinPrice();
+  changeNumberOfGuests();
+  resetMainMarker();
+  resetImagePreview();
+});
+
 const onSuccessSubmit = () => {
   showSuccessPopup('Форма отправлена!');
   adForm.reset();
+  changeMinPrice();
+  changeNumberOfGuests();
   resetMainMarker();
+  resetImagePreview();
 };
 
 const onFailSubmit = () => {

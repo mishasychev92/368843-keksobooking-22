@@ -58,6 +58,4 @@ const filterAdData = (adData) => {
   return filterTypes(adData) && filterPrice(adData) && filterRooms(adData) && filterGuests(adData) && filterFeatures(adData);
 };
 
-export { 
-  filterAdData
-};
+export { filterAdData };
