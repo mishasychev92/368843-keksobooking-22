@@ -1,13 +1,13 @@
 import { mapFilter } from './form.js';
 
+const LOW_PRICE = 10000;
+const HIGH_PRICE = 50000;
+
 const typeFilter = mapFilter.querySelector('#housing-type');
 const priceFilter = mapFilter.querySelector('#housing-price');
 const roomsFilter = mapFilter.querySelector('#housing-rooms');
 const guestsFilter = mapFilter.querySelector('#housing-guests');
 const featuresFilter = mapFilter.querySelector('#housing-features');
-
-const LOW_PRICE = 10000;
-const HIGH_PRICE = 50000;
 
 const filterTypes = (adData) => {
   if (typeFilter.value === 'any') {

@@ -1,6 +1,6 @@
 import { showErrorPopup, showSuccessPopup } from './popup.js';
-import { resetMainMarker } from './map.js';
-import { sendData } from './api.js';
+import { addAdPinsIntoMap, resetMainMarker } from './map.js';
+import { getData, sendData } from './api.js';
 import { resetImagePreview } from './ad-photos.js';
 
 const MIN_PRICE = {
@@ -78,18 +78,14 @@ priceField.addEventListener('input', () => {
 
 const changeNumberOfGuests = () => {
   guestOptions.forEach((option) => {
-    option.disabled = true;
+    if (NUMBER_OF_QUESTS[roomsField.value].includes(Number(option.value))) {
+      option.disabled = false;
+      option.selected = true;
+    } else {
+      option.disabled = true;
+    }
   });
-
-  NUMBER_OF_QUESTS[roomsField.value].forEach((element) => {
-    guestOptions.forEach((option) => {
-      if (element === Number(option.value)) {
-        option.disabled = false;
-        option.selected = true;
-      }
-    });
-  });
-};
+}
 
 roomsField.addEventListener('change', changeNumberOfGuests);
 
@@ -123,19 +119,27 @@ const enableForms = () => {
 resetButton.addEventListener ('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
+  mapFilter.reset();
   changeMinPrice();
   changeNumberOfGuests();
   resetMainMarker();
   resetImagePreview();
+  getData((adData) => {
+    addAdPinsIntoMap(adData);
+  }, showErrorPopup);
 });
 
 const onSuccessSubmit = () => {
   showSuccessPopup('Форма отправлена!');
   adForm.reset();
+  mapFilter.reset();
   changeMinPrice();
   changeNumberOfGuests();
   resetMainMarker();
   resetImagePreview();
+  getData((adData) => {
+    addAdPinsIntoMap(adData);
+  }, showErrorPopup);
 };
 
 const onFailSubmit = () => {
