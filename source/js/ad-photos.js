@@ -38,10 +38,11 @@ photoFileChooser.addEventListener('change', () => {
       
     reader.addEventListener('load', () => {
       photoPreview.innerHTML = '';
-      const newPhoto = photoPreview.appendChild(document.createElement('img'));
+      const newPhoto = document.createElement('img');
       newPhoto.width = photoPreview.offsetWidth;
       newPhoto.height = photoPreview.offsetHeight;
       newPhoto.src = reader.result;
+      photoPreview.appendChild(newPhoto);
     });
       
     reader.readAsDataURL(file);

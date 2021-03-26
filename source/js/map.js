@@ -75,32 +75,41 @@ mainPinMarker
   .on('move', onMovingPin)
   .addTo(map);
 
-const addAdPinsIntoMap = (adData) => {
-  clearPinMarkes(pinMarkers);
-  adData
-    .slice(0, MAX_NUMBER_OF_ADS)
-    .filter(filterAdData)
-    .forEach((ad) => {
-      const pinIcon = L.icon({
-        iconUrl: pinImage.url,
-        iconSize: pinImage.size,
-        iconAnchor: pinImage.anchor,
-      });
+const createPin = (ad) => {
+  const pinIcon = L.icon({
+    iconUrl: pinImage.url,
+    iconSize: pinImage.size,
+    iconAnchor: pinImage.anchor,
+  });
 
-      const pinMarker = L.marker(
-        {
-          lat: ad.location.lat,
-          lng: ad.location.lng,
-        }, 
-        {
-          icon: pinIcon,
-        },
-      );
-      pinMarker
-        .addTo(map)
-        .bindPopup(renderAdCard(ad), {keepInView: true});
-      pinMarkers.push(pinMarker);
-    });
+  const pinMarker = L.marker(
+    {
+      lat: ad.location.lat,
+      lng: ad.location.lng,
+    }, 
+    {
+      icon: pinIcon,
+    },
+  );
+  pinMarker
+    .addTo(map)
+    .bindPopup(renderAdCard(ad), {keepInView: true});
+  pinMarkers.push(pinMarker);
+};
+
+const addAdPinsIntoMap = (adData) => {
+  const filteredAds = [];
+  clearPinMarkes(pinMarkers);
+
+  for (let ad of adData) {
+    if (filterAdData(ad)) {
+      createPin(ad);
+      filteredAds.push(ad);
+      if (filteredAds.length >= MAX_NUMBER_OF_ADS) {
+        break;
+      }
+    }
+  }
 };
 
 export { 

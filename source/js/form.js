@@ -35,13 +35,13 @@ const capacityField = document.querySelector('#capacity');
 const guestOptions = capacityField.querySelectorAll('option');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
-const changeMinPrice = () => {
+const OnChangeMinPrice = () => {
   const currentMinPrice = MIN_PRICE[typeField.value];
   priceField.setAttribute('placeholder', currentMinPrice);
   priceField.setAttribute('min', currentMinPrice);
 };
 
-typeField.addEventListener('change', changeMinPrice);
+typeField.addEventListener('change', OnChangeMinPrice);
 
 timeField.addEventListener ('change', (evt) => {
   timeInField.value = evt.target.value;
@@ -76,7 +76,7 @@ priceField.addEventListener('input', () => {
   priceField.reportValidity();
 });
 
-const changeNumberOfGuests = () => {
+const onChangeNumberOfGuests = () => {
   guestOptions.forEach((option) => {
     if (NUMBER_OF_QUESTS[roomsField.value].includes(Number(option.value))) {
       option.disabled = false;
@@ -87,7 +87,7 @@ const changeNumberOfGuests = () => {
   });
 }
 
-roomsField.addEventListener('change', changeNumberOfGuests);
+roomsField.addEventListener('change', onChangeNumberOfGuests);
 
 const disableForms = () => {
   formFields.forEach((field) => {
@@ -113,15 +113,15 @@ const enableForms = () => {
 
   adForm.classList.remove('ad-form--disabled');
   mapFilter.classList.remove('map__filters--disabled');
-  changeNumberOfGuests();
+  onChangeNumberOfGuests();
 };
 
 resetButton.addEventListener ('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
   mapFilter.reset();
-  changeMinPrice();
-  changeNumberOfGuests();
+  OnChangeMinPrice();
+  onChangeNumberOfGuests();
   resetMainMarker();
   resetImagePreview();
   getData((adData) => {
@@ -133,8 +133,8 @@ const onSuccessSubmit = () => {
   showSuccessPopup('Форма отправлена!');
   adForm.reset();
   mapFilter.reset();
-  changeMinPrice();
-  changeNumberOfGuests();
+  OnChangeMinPrice();
+  onChangeNumberOfGuests();
   resetMainMarker();
   resetImagePreview();
   getData((adData) => {

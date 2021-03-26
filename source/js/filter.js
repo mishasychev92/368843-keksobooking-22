@@ -10,10 +10,7 @@ const guestsFilter = mapFilter.querySelector('#housing-guests');
 const featuresFilter = mapFilter.querySelector('#housing-features');
 
 const filterTypes = (adData) => {
-  if (typeFilter.value === 'any') {
-    return true;
-  }
-  return adData.offer.type === typeFilter.value;
+  return typeFilter.value === 'any' || adData.offer.type === typeFilter.value;
 };
 
 const filterPrice = (adData) => {
@@ -32,26 +29,16 @@ const filterPrice = (adData) => {
 };
 
 const filterRooms = (adData) => {
-  if (roomsFilter.value === 'any') {
-    return true;
-  }
-  return adData.offer.rooms === Number(roomsFilter.value);
+  return roomsFilter.value === 'any' || adData.offer.rooms === Number(roomsFilter.value);
 };
 
 const filterGuests = (adData) => {
-  if (guestsFilter.value === 'any') {
-    return true;
-  }
-  return adData.offer.guests === Number(guestsFilter.value);
+  return guestsFilter.value === 'any' || adData.offer.guests === Number(guestsFilter.value);
 };
 
 const filterFeatures = (adData) => {
   const checkedFeatures = [...featuresFilter.querySelectorAll('input:checked')].map((feature) => feature.value);
-
-  if (!checkedFeatures.length) {
-    return true;
-  }
-  return checkedFeatures.every((feature) => adData.offer.features.includes(feature));
+  return !checkedFeatures.length || checkedFeatures.every((feature) => adData.offer.features.includes(feature));
 }
 
 const filterAdData = (adData) => {
