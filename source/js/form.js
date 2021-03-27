@@ -35,13 +35,13 @@ const capacityField = document.querySelector('#capacity');
 const guestOptions = capacityField.querySelectorAll('option');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
-const OnChangeMinPrice = () => {
+const onChangeMinPrice = () => {
   const currentMinPrice = MIN_PRICE[typeField.value];
   priceField.setAttribute('placeholder', currentMinPrice);
   priceField.setAttribute('min', currentMinPrice);
 };
 
-typeField.addEventListener('change', OnChangeMinPrice);
+typeField.addEventListener('change', onChangeMinPrice);
 
 timeField.addEventListener ('change', (evt) => {
   timeInField.value = evt.target.value;
@@ -120,7 +120,7 @@ resetButton.addEventListener ('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
   mapFilter.reset();
-  OnChangeMinPrice();
+  onChangeMinPrice();
   onChangeNumberOfGuests();
   resetMainMarker();
   resetImagePreview();
@@ -133,7 +133,7 @@ const onSuccessSubmit = () => {
   showSuccessPopup('Форма отправлена!');
   adForm.reset();
   mapFilter.reset();
-  OnChangeMinPrice();
+  onChangeMinPrice();
   onChangeNumberOfGuests();
   resetMainMarker();
   resetImagePreview();
